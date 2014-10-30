@@ -13,6 +13,7 @@ if (!isset($pageList) || !is_array($pageList) || empty($pageList)) {
     </head>
     <body>
         <h1>PHP代码段</h1>
+        <a href="codeEdit.php">编辑</a>
         <ul>
             <?php foreach ($pageList as $page): ?>
                 <li><a href="<?php echo $page['href']; ?>" target="_blank"><?php echo $page['name']; ?></a>(<?php echo $page['description']; ?>)</li>
