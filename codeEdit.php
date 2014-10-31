@@ -1,6 +1,15 @@
 <?php
 if ($_POST['submit']) {
-    var_dump($_POST);
+    $pageList = array();
+    for ($i = 0; $i < count($_POST['href']); $i++) {
+        $pageList[] = array(
+            'href' => $_POST['href'][$i],
+            'name' => $_POST['name'][$i],
+            'description' => $_POST['description'][$i],
+        );
+    }
+    file_put_contents('config.php', "<?php\r\n \$pageList=" . var_export($pageList, TRUE) . ';');
+    header('Location:index.php');
     exit();
 }
 include 'config.php';
@@ -58,11 +67,13 @@ if (!isset($pageList) || !is_array($pageList) || empty($pageList)) {
                 </thead>
                 <tbody>
                     <?php foreach ($pageList as $key => $page): ?>
-                    <td><input type="text" value="<?php echo $page['href']; ?>" name="href<?php echo $key; ?>" style="width: 95%;"/></td>
-                    <td><input type="text" value="<?php echo $page['name']; ?>" name="name<?php echo $key; ?>" style="width: 95%;"/></td>
-                    <td><input type="text" value="<?php echo $page['description']; ?>" name="description<?php echo $key; ?>" style="width: 95%;"/></td>
-                    <td><a onclick="delTd($(this));">删除</a></td>
-                <?php endforeach; ?>
+                        <tr>
+                            <td><input type="text" value="<?php echo $page['href']; ?>" name="href[<?php echo $key; ?>]" style="width: 95%;"/></td>
+                            <td><input type="text" value="<?php echo $page['name']; ?>" name="name[<?php echo $key; ?>]" style="width: 95%;"/></td>
+                            <td><input type="text" value="<?php echo $page['description']; ?>" name="description[<?php echo $key; ?>]" style="width: 95%;"/></td>
+                            <td><a onclick="delTd($(this));">删除</a></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
                 <tfoot>
                 <td colspan='4'><input type="submit" name="submit" value="保存"/><input type="button" name="cancel" value="取消" onclick="window.location.href = 'index.php';"/></td>
@@ -72,7 +83,7 @@ if (!isset($pageList) || !is_array($pageList) || empty($pageList)) {
         <script>
             var addTd = function (obj) {
                 var num = parseInt(obj.attr('number'));
-                var trHtml = '<tr><td><input type="text" value="" name="href' + num + '" style="width: 95%;"/></td><td><input type="text" value="" name="name' + num + '" style="width: 95%;"/></td><td><input type="text" value="" name="description' + num + '" style="width: 95%;"/></td><td><a onclick="delTd($(this));">删除</a></td></tr>';
+                var trHtml = '<tr><td><input type="text" value="" name="href[' + num + ']" style="width: 95%;"/></td><td><input type="text" value="" name="name[' + num + ']" style="width: 95%;"/></td><td><input type="text" value="" name="description[' + num + ']" style="width: 95%;"/></td><td><a onclick="delTd($(this));">删除</a></td></tr>';
                 $('table.table tbody').append(trHtml);
                 obj.attr('number', num + 1);
             }
