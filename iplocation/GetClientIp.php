@@ -26,6 +26,3 @@ function get_client_ip($type = 0) {
     $ip = $long ? array($ip, $long) : array('0.0.0.0', 0);
     return $ip[$type];
 }
-
-var_dump(get_client_ip(0));
-var_dump(get_client_ip(1));

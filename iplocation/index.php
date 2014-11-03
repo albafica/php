@@ -2,7 +2,9 @@
 $location = array();
 if ($_POST['submit']) {
     include 'IpLocation.class.php';
+    include 'GetClientIp.php';
     $IpLocation = new IpLocation();
+    $_POST['ip'] = empty($_POST['ip']) ? get_client_ip() : $_POST['ip'];
     $location = $IpLocation->getlocation($_POST['ip']);
 }
 ?>
