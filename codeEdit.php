@@ -60,8 +60,8 @@ if (!isset($pageList) || !is_array($pageList) || empty($pageList)) {
         <form action="" name="form" method="post" >
             <table class="table" width="90%">
                 <thead>
-                <th width="20%">标题</th>
                 <th width="20%">链接地址</th>
+                <th width="20%">标题</th>
                 <th width="50%">描述</th>
                 <th width="10%"><a onclick="addTd($(this));" number='<?php echo count($pageList); ?>'>新增</a></th>
                 </thead>
