@@ -1,6 +1,6 @@
 <?php
 $location = array();
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
     include 'IpLocation.class.php';
     include 'GetClientIp.php';
     $IpLocation = new IpLocation();

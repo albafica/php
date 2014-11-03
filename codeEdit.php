@@ -1,5 +1,5 @@
 <?php
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
     $pageList = array();
     for ($i = 0; $i < count($_POST['href']); $i++) {
         $pageList[] = array(
