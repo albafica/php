@@ -434,11 +434,12 @@ class FileUpload {
      */
     private function chkType($ext, $type) {
         if (!isset($this->_mimes[$ext])) {
-            $this->_error = '未知的文件类型';
             return false;
         }
-        if (!empty($this->allowTypes))
-            return in_array(strtolower($type), $this->_mimes[$ext]);
+        if (!empty($this->allowTypes)) {
+            $mimes = is_array($this->_mimes[$ext]) ? $this->_mimes[$ext] : array($this->_mimes[$ext]);
+            return in_array(strtolower($type), $mimes);
+        }
         return true;
     }
 
