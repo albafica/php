@@ -15,7 +15,6 @@ class FileUpload {
     private $_config = array(
         'maxSize' => -1, // 上传文件的最大值
         'supportMulti' => true, // 是否支持多文件上传
-        'allowExts' => array(), // 允许上传的文件后缀 留空不作后缀检查
         'allowTypes' => array(), // 允许上传的文件类型 留空不做检查
         'autoSub' => false, // 启用子目录保存文件
         'subType' => 'hash', // 子目录创建方式 可以使用hash date custom
@@ -40,6 +39,112 @@ class FileUpload {
         'thumbRemoveOrigin' => false, // 是否移除原图
         'thumbType' => 1, // 缩略图生成方式 1 按设置大小截取 0 按原图等比例缩略
         'zipImages' => false, // 压缩图片文件上传
+    );
+
+    /**
+     * 文件mime值
+     * @var type 
+     */
+    private $_mimes = array(
+        'csv' => array(
+            'text/x-comma-separated-values',
+            'text/comma-separated-values',
+            'application/octet-stream',
+            'application/vnd.ms-excel',
+            'application/x-csv',
+            'text/x-csv',
+            'text/csv',
+            'text/plain',
+            'application/csv',
+            'application/excel',
+            'application/vnd.msexcel'
+        ),
+        'vcf' => array('text/x-vcard'),
+        'xls' => array(
+            'application/excel',
+            'application/vnd.ms-excel',
+            'application/msexcel',
+            'application/msword'
+        ),
+        'ppt' => array(
+            'application/powerpoint',
+            'application/vnd.ms-powerpoint'
+        ),
+        'tar' => 'application/x-tar',
+        'rar' => array(
+            'application/octet-stream',
+            'application/x-rar',
+            'application/x-rar-compressed',
+            'application/rar', //兼容zip
+            'application/x-zip',
+            'application/zip',
+            'application/x-zip-compressed',
+        ),
+        'tgz' => array(
+            'application/x-tar',
+            'application/x-gzip-compressed'
+        ),
+        'xhtml' => 'application/xhtml+xml',
+        'xht' => 'application/xhtml+xml',
+        'zip' => array(
+            'application/x-zip',
+            'application/zip',
+            'application/x-zip-compressed', //兼容rar
+            'application/octet-stream',
+            'application/x-rar',
+            'application/x-rar-compressed',
+            'application/rar',
+        ),
+        'bmp' => array(
+            'image/bmp',
+            'image/x-windows-bmp',
+            'image/x-ms-bmp'
+        ),
+        'gif' => 'image/gif',
+        'jpeg' => array(
+            'image/jpeg',
+            'image/pjpeg',
+            'image/gif',
+            'image/png'
+        ),
+        'jpg' => array(
+            'image/jpeg',
+            'image/pjpeg',
+            'image/gif',
+            'image/png'
+        ),
+        'jpe' => array(
+            'image/jpeg',
+            'image/pjpeg'
+        ),
+        'png' => array(
+            'image/png',
+            'image/x-png'
+        ),
+        'html' => 'text/html',
+        'htm' => 'text/html',
+        'shtml' => 'text/html',
+        'txt' => 'text/plain',
+        'text' => 'text/plain',
+        'doc' => 'application/msword',
+        'docx' => array(
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/zip',
+            'application/msword',
+        ),
+        'xlsx' => array(
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/zip',
+            'application/vnd.ms-excel',
+            'application/msexcel',
+            'application/octet-stream',
+            'application/msword',
+        ),
+        'xl' => 'application/excel',
+        'pdf' => array(
+            'application/pdf',
+            'application/x-download'
+        ),
     );
 
     /**
@@ -316,8 +421,8 @@ class FileUpload {
      * @return boolean      文件后缀是否通过检查
      */
     private function chkExt($ext) {
-        if (!empty($this->allowExts))
-            return in_array(strtolower($ext), $this->allowExts, true);
+        if (!empty($this->allowTypes))
+            return in_array(strtolower($ext), $this->allowTypes, true);
         return true;
     }
 
@@ -327,9 +432,13 @@ class FileUpload {
      * @param sting $type   文件类型
      * @return boolean      文件是否通过类型检查
      */
-    private function chkType($type) {
+    private function chkType($ext, $type) {
+        if (!isset($this->_mimes[$ext])) {
+            $this->_error = '未知的文件类型';
+            return false;
+        }
         if (!empty($this->allowTypes))
-            return in_array(strtolower($type), $this->allowTypes);
+            return in_array(strtolower($type), $this->_mimes[$ext]);
         return true;
     }
 
@@ -435,7 +544,7 @@ class FileUpload {
             return false;
         }
         //检查文件Mime类型
-        if (!$this->chkType($file['type'])) {
+        if (!$this->chkType($file['extension'], $file['type'])) {
             $this->_error = '上传文件类型不允许！';
             return false;
         }
