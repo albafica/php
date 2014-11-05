@@ -24,4 +24,10 @@
     'name' => '多文件上传',
     'description' => '单文件，多文件上传类',
   ),
+  4 => 
+  array (
+    'href' => 'image/index.php',
+    'name' => '图片处理',
+    'description' => '图片处理类，包括生成缩略，裁剪，添加水印与添加文字等',
+  ),
 );
