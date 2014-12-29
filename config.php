@@ -30,4 +30,10 @@
     'name' => '图片处理',
     'description' => '图片处理类，包括生成缩略，裁剪，添加水印与添加文字等',
   ),
+  5 => 
+  array (
+    'href' => 'filedownload/index.php',
+    'name' => '文件下载',
+    'description' => 'PHP文件下载，使用header方式',
+  ),
 );
