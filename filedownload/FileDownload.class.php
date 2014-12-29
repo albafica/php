@@ -79,8 +79,10 @@ class FileDownload {
             $this->errMsg = $filePath . '不允许下载！';
             return false;
         }
-        if (function_exists("mime_content_type")) {
-            $this->mineType = mime_content_type($filePath);
+        if (function_exists("finfo_open")) {
+            $finfo = finfo_open(FILEINFO_MIME);
+            $this->mineType = finfo_file($finfo, $filePath);
+            finfo_close($finfo);
         }
         if (empty($this->mineType) && isset($this->fileType[$filetype])) {
             $this->mineType = $this->fileType[$filetype];
