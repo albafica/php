@@ -39,7 +39,7 @@ class FileDownload {
         header("Content-Length: " . filesize($filePath));
         header("Content-Disposition: attachment; filename=\"$downLoadName\"");
         header('Content-Transfer-Encoding: binary');
-        readfile($this->filename);
+        readfile($filePath);
         return true;
     }
 
