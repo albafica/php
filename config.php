@@ -36,4 +36,10 @@
     'name' => '文件下载',
     'description' => 'PHP文件下载，使用header方式',
   ),
+  6 => 
+  array (
+    'href' => 'unicode/index.php',
+    'name' => 'unicode转换',
+    'description' => '中文和UNICODE编码的转换',
+  ),
 );
