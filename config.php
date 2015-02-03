@@ -42,4 +42,10 @@
     'name' => 'unicode转换',
     'description' => '中文和UNICODE编码的转换',
   ),
+  7 => 
+  array (
+    'href' => 'imgstream/index.php',
+    'name' => '图片、base64编码二进制流相互转换',
+    'description' => '图片、base64编码二进制流相互转换',
+  ),
 );
