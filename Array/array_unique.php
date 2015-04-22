@@ -20,4 +20,7 @@ print_r($arr);
 //print_r($arr3);//利用php的array_unique函数去重,输出Array ( [a] => a1 [b] => b1 [c] => a2 )
 
 
+$arr = array(1,2,3,4,1);
+
+var_dump(array_unique($arr));
 
